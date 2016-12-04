@@ -1,0 +1,18 @@
+          <div ng-controller="ItemsController"  style="background-color:#F5FFD3" ng-cloak>
+            <md-content layout-padding style="background-color:#F5FFD3">
+              <md-grid-list
+              md-cols-gt-md="12" md-cols="3" md-cols-md="8"
+              md-row-height-gt-md="1:1" md-row-height="4:3"
+              md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px">
+                <md-grid-tile
+                ng-repeat="item in items track by $index"
+                md-colspan-gt-sm="3"
+                md-rowspan-gt-sm="3"
+                md-whiteframe="3">
+                  <a href="download/{{item.id}}">Download {{item.name}}</a>
+                  <!--<hr>-->
+                  <!--<p>Description: {{item.description}}</p>-->
+                </md-grid-tile>
+              </md-grid-list>
+            </md-content>
+              </div>

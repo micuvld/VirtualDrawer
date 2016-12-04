@@ -1,0 +1,17 @@
+<h1>FileUploader#new</h1>
+<p>Find me in app/views/file_uploader/new.html.erb</p>
+<% flash.each do |key, msg| %>
+    <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_#{key}" %>
+<% end %>
+<%= form_tag '/file_uploader/create', { :multipart => true } do %>
+    <p>
+      <%= file_field_tag 'file' %>
+    </p>
+    <p>
+      <%= submit_tag "Upload" %>
+    </p>
+<% end %>
+<%= @items.each do |item|
+  item
+  end
+  %>

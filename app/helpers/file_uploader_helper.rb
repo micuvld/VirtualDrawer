@@ -1,0 +1,2 @@
+module FileUploaderHelper
+end

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Eclipse Parallel Mars.1
+Comment=Eclipse Parallel Mars.1
+Icon=/opt/eclipse-parallel/icon.xpm
+Exec=/opt/eclipse-parallel/eclipse
+Terminal=false
+Type=Application
+Categories=X-Red-Hat-Extra;Application;Development;

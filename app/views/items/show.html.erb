@@ -1,0 +1,40 @@
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- Angular Material requires Angular.js Libraries -->
+
+</head>
+<body ng-app="VirtualDrawer" style="background-color:#F5FFD3" ng-cloak>
+
+<!--<section layout="row">-->
+
+<div class="row" style="overflow:auto; height:100%" ng-controller="MainController">
+  <div class="col-sm-3" style="height:100%"><%= render 'partials/sidenav'%></div>
+  <div ng-controller="ItemsController"  style="background-color:#F5FFD3" ng-cloak>
+    <md-content layout-padding style="background-color:#F5FFD3">
+      <md-grid-list
+      md-cols-gt-md="12" md-cols="3" md-cols-md="8"
+      md-row-height-gt-md="1:1" md-row-height="4:3"
+      md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px">
+        <md-grid-tile
+        ng-repeat="item in items track by $index"
+        md-colspan-gt-sm="3"
+        md-rowspan-gt-sm="3"
+        md-whiteframe="3"
+        ng-click="downloadItem(item.id)">
+          {{item.name}}
+          <!--<hr>-->
+          <!--<p>Description: {{item.description}}</p>-->
+        </md-grid-tile>
+      </md-grid-list>
+    </md-content>
+  </div>
+</div>
+
+
+<!--</section>-->
+</body>
+</html>

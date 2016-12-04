@@ -1,0 +1,20 @@
+<div ng-controller="TagController"  style="background-color:#F5FFD3" ng-cloak>
+  <div id="tagsView">
+    <md-content layout-padding style="height:100%; width:100%;">
+      <md-grid-list
+      md-cols="4" md-row-height="50" md-gutter="5px">
+        <md-grid-tile
+        ng-repeat="tag in tags track by $index"
+        ng-style="{
+            'background': tiles[$index].color
+          }"
+        md-colspan-gt-sm="{{tiles[$index].colspan}}"
+        md-rowspan-gt-sm="{{tiles[$index].rowspan}}"
+        md-whiteframe="3"
+        ng-click="switchToTag(tag.id)">
+          {{tag.name}}
+        </md-grid-tile>
+      </md-grid-list>
+    </md-content>
+  </div>
+</div>
