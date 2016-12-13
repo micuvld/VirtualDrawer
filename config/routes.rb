@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get 'download/:id', to: 'download#download'
 
   get 'tags', to: 'tags#get_tags'
+  delete 'tags', to: 'tags#destroy'
+  put 'tags', to: 'tags#update'
 
   post 'upload', to: 'items#create'
 

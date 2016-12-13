@@ -1,3 +1,13 @@
+.side-button {
+    height: 40px;
+    padding-left: 20px;
+    padding-top: 5px;
+    text-align: left;
+    color: white;
+    background-color: #336699;
+    font-size: 20px;
+}
+
 .tag {
     height: 60px;
     padding-top: 20px;
@@ -6,13 +16,41 @@
     color: white;
 }
 
+.new-tag {
+    height: 60px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    color: blue;
+}
+
 .tag-container {
-     margin-bottom: 20px;
-     margin-right: 20px;
-     height: 60px;
-     text-align: center;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    height: 60px;
+    text-align: center;
  }
 
+ .editable-tag-container {
+    margin-bottom: 20px;
+    margin-right: 20px;
+    height: 60px;
+    text-align: center;
+    border-style: dashed; 
+    border-color: white;
+    opacity: 0.7;
+ }
+.md-button.md-fab {
+  line-height: 5.6rem;
+  min-width: 0;
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 50%;
+}
+
+.md-theme-indigo {
+    background-color: #71C42B !important;
+}
 .dialogdemoBasicUsage #popupContainer {
     position: relative; }
 
@@ -33,3 +71,10 @@
 
 .dialogdemoBasicUsage .dialog-demo-prerendered md-checkbox {
     margin-bottom: 0; }
+
+html{
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}

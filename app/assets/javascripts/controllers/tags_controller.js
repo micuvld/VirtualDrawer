@@ -8,7 +8,72 @@ virtualDrawer.controller('TagController', ['$scope', '$http', '$timeout', functi
     $scope.dropzones = [];
     $scope.searchTag = "";
 
-    $http(
+    $scope.newTagDropzone = null;
+    $scope.newTagName = "";
+    $scope.tagNameInput = "";
+
+    $scope.currentEditingTag = "";
+    $scope.oldNameOfCurrentEditingTag = "";
+    var editableTags = false;
+
+    function Tag(id, name) {
+        this.id = id;
+        this.name = name;
+
+        this.deleteSelf = function() {
+            $http(
+                {
+                    url:'/tags',
+                    method:'DELETE',
+                    params: {
+                        username: 'oneName',
+                        tagId: this.id
+                    },
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    }
+                })
+                .then(function(result) {
+                        getAllTags();
+                        $scope.toggleModalEdit();
+                    }
+                );
+        }
+
+        this.updateSelf = function() {        
+            $http(
+                {
+                    url:'/tags',
+                    method:'PUT',
+                    params: {
+                        username: 'oneName',
+                        tagId: this.id,
+                        tagNewName: this.name
+                    },
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    }
+                })
+                .then(function(result) {
+                        getAllTags();
+                        $scope.toggleModalEdit();
+                    }
+                );
+        }
+    }
+
+    getAllTags();
+
+    $scope.$on('editButtonsForTagController', function() {
+        editableTags = !editableTags;
+    });
+
+    $scope.getEditableStatus = function() {
+        return editableTags ? "editable-tag-container" : "tag-container";
+    }
+
+    function getAllTags() {
+            $http(
         {
             url:'/tags',
             method:'GET',
@@ -16,30 +81,38 @@ virtualDrawer.controller('TagController', ['$scope', '$http', '$timeout', functi
         })
         .then(function(result) {
                 $scope.tags = result.data.map(function(elem) {
-                    return {
-                        name: elem.name,
-                        id: elem.id
-                    }
+                    return new Tag(elem.id, elem.name)
                 });
                 $timeout(createDropzones, 50);
                 console.log($scope.tags);
             }
         );
+    }
 
-    $scope.switchToTag = function(tagId) {
-        window.location = "/items/" + tagId;
+    $scope.tagAction = function(tag) {
+        if (editableTags == true) {
+            $scope.currentEditingTag = tag;
+            $scope.oldNameOfCurrentEditingTag = tag.name;
+            $scope.toggleModalEdit();
+        } else {
+            window.location = "/items/" + tag.id;
+        }
     }
 
     function createDropzones() {
         $scope.dropzones = [];
         Dropzone.autoDiscover = false;
         for (var index in $scope.tags) {
-            dropzoneTagId = "myDropzoneTag" + $scope.tags[index].id;
-            createDropzoneElement($scope.tags[index]);
+            var dropzoneTagId = "formDropzoneTag" + $scope.tags[index].id;
+            createDropzoneElement($scope.tags[index], dropzoneTagId);
+        }
+
+        if ($scope.newTagDropzone == null) {
+            createDropzoneNewTag("new-tag-modal-form");
         }
     }
 
-    function createDropzoneElement(tag) {
+    function createDropzoneElement(tag, dropzoneTagId) {
         var form = document.createElement('form');
         form.classList.add('dropzone');
         form.classList.add('tag');
@@ -53,9 +126,10 @@ virtualDrawer.controller('TagController', ['$scope', '$http', '$timeout', functi
             {
                 init: function() {
                     this.on("sending", function(file,xhr,formData) {
+                    	console.log($scope.newTagName);
                         formData.append("username", "oneName");
                         formData.append("tag_name", tag.name);
-                        formData.append("description", '');
+                        formData.append("item_type", "file");
                         formData.append("alternative_name", '');
                     });
                     this.on("complete", function (file) {
@@ -73,5 +147,58 @@ virtualDrawer.controller('TagController', ['$scope', '$http', '$timeout', functi
             });
 
         $scope.dropzones.push(dropzone);
+    }
+
+    function createDropzoneNewTag(dropzoneTagId) {
+        var form = document.createElement('form');
+        form.classList.add('dropzone');
+        form.classList.add('new-tag');
+        form.method = 'post';
+        form.action = '/upload';
+        form.id = dropzoneTagId;
+        form.innerHTML = "New tag";
+
+        $scope.tagNameInput = document.createElement("input");
+        $scope.tagNameInput.type = "text";
+        $scope.tagNameInput.name = "tag_name"
+        $scope.tagNameInput.hidden = true;
+
+        form.appendChild($scope.tagNameInput);
+        document.getElementById('new_tag_button').appendChild(form);
+
+        $scope.newTagDropzone = new Dropzone(form,
+            {
+                init: function() {
+                    this.on("drop", function(file) {
+                        $scope.toggleModalNew();
+                    });
+                    this.on("sending", function(file,xhr,formData) {
+                        formData.append("username", "oneName");
+                        formData.append("item_type", "file");
+                        formData.append("alternative_name", '');
+                    });
+                    this.on("complete", function (file) {
+                        if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                            $scope.newTagDropzone.removeAllFiles();
+                        }
+                    });
+                },
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                autoProcessQueue:false,
+                clickable: false,
+                createImageThumbnails: false,
+                dictDefaultMessage: ''
+            });
+    }
+
+    $scope.createNewTagAndUploadFile = function() {
+        console.log("hi");
+        console.log($scope.newTagName);
+        $scope.tagNameInput.setAttribute("value", $scope.newTagName);
+    	$scope.newTagDropzone.processQueue();
+        $scope.toggleModal();
+        window.location.reload();
     }
 }]);

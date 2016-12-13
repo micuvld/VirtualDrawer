@@ -17,37 +17,64 @@
     <div class="col-lg-3" style="padding:0px">
       <div style="height:100%"><%= render 'partials/sidenav'%></div>
     </div>
+
     <div class="col-lg-9" ng-controller="TagController"
          style="background-color:#F5FFD3; margin-top:20px;" ng-cloak>
           <!--<label>Search:-->
             <!--<input ng-model="searchTag">-->
           <!--</label>-->
           <div ng-repeat="tag in tags"
-                class="tag-container col-lg-2" ng-click="switchToTag(tag.id)"
-               ng-style="{
-            'background': colors[$index]
-          }"
+                class="col-lg-2" ng-click="tagAction(tag)"
+                ng-style="{
+                  'background': colors[$index]
+                }"
+                ng-class="getEditableStatus()"
                 id="tag_{{tag.id}}">
           </div>
 
       <!-- Trigger the modal with a button -->
-      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#new_tag_modal">Open Modal</button>
+      <div id="new_tag_button" class="tag-container col-lg-2" style="border-style:dashed; border-color:blue;" data-target="#new_tag_modal"></div>
+
 
       <!-- Modal -->
-      <div id="new_tag_modal" class="modal fade" role="dialog">
+      <div id="new_tag_modal" new-tag-modal class="modal fade" role="dialog">
         <div class="modal-dialog">
 
           <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Modal Header</h4>
+              <h4 class="modal-title">New tag</h4>
             </div>
             <div class="modal-body">
-              <p>Some text in the modal.</p>
+              <label>Tag name:</label>
+              <input type="text", ng-model="newTagName">
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-default" ng-click="createNewTagAndUploadFile()">Create & Upload</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div id="edit_tag_modal" edit-tag-modal class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Edit tag (old: {{oldNameOfCurrentEditingTag}})</h4>
+            </div>
+            <div class="modal-body">
+              <label>New name:</label>
+              <input type="text", ng-model="currentEditingTag.name">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" style="float:left" ng-click="currentEditingTag.deleteSelf()">Delete tag</button>
+              <button type="button" class="btn btn-default" ng-click="currentEditingTag.updateSelf()">Apply</button>
             </div>
           </div>
 

@@ -7,4 +7,14 @@ class TagsController < ApplicationController
       render json: Tag.all
     end
   end
+
+  def destroy
+    Tag.delete(params[:tagId])
+  end
+
+  def update
+  	tag = Tag.find_by(id: params[:tagId])
+	tag.name = params[:tagNewName]
+	tag.save
+  end
 end

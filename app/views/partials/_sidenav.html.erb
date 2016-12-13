@@ -1,41 +1,51 @@
-<div ng-controller="SideNavController" ng-cloak>
-    <md-sidenav
-    class="md-sidenav-left"
-    md-component-id="left"
-    md-is-locked-open="$mdMedia('gt-md')"
-    md-whiteframe="4">
+<div ng-controller="SideNavController as sideNavCtrl" ng-cloak>
+  <md-sidenav
+  class="md-sidenav-left"
+  md-component-id="left"
+  md-is-locked-open="$mdMedia('gt-md')"
+  md-whiteframe="4">
 
-      <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">Virtual Drawer</h1>
-      </md-toolbar>
-      <md-content layout-padding>
-        <%= form_tag '/upload', { :multipart => true } do %>
-            <p>
-              <%= file_field_tag 'file' %>
-            </p>
-            <p>
-              <%= text_field_tag 'description', nil, placeholder: 'Enter description here' %>
-            </p>
-            <p>
-              <%= text_field_tag 'tag_name', nil, placeholder: 'Enter tag here' %>
-            </p>
-            <p>
-              <%= text_field_tag 'alternative_name', nil, placeholder: 'Enter item name here' %>
-            </p>
-            <p>
-              <%= hidden_field_tag 'username', 'oneName'%>
-            <p>
-              <%= submit_tag "Upload" %>
-            </p>
-        <% end %>
-        <form action="/file-upload"
-              class="dropzone"
-              id="my-dropzone"></form>
-        <hr/>
-        Navigate: *filter-input*
-        <!--<div ><%= render 'partials/tagView'%></div>-->
-      </md-content>
+    <md-toolbar class="md-theme-indigo" ng-click="goHome()">
+      <h1 class="md-toolbar-tools">
+      Virtual Drawer
+      </h1>
+    </md-toolbar>
+        <button class="side-button" ng-click="toggleAddNoteModal()">Add note</button>
+        <div class="side-button" ng-click="editButtons()">Edit</div>
+        <label>Search:
+          <input ng-model="searchTag">
+        </label>
+        <div id="navigateTags" style="overflow-y: scroll; height:500px">
+          <div ng-repeat="tag in navigateTags | filter:{name: searchTag}"
+                class="tag" ng-click="switchToTag(tag.id)"
+               style="background-color: #4527a0; margin-top:5px">{{tag.name}}
+          </div>
+        </div>
+    </md-content>
 
-    </md-sidenav>
+  </md-sidenav>
 
+  <div id="add_note_modal" add-note-modal class="modal fade" role="dialog" >
+    <div class="modal-dialog" ng-controller="NotesController as noteCtrl">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add note</h4>
+        </div>
+        <div class="modal-body">
+          <label>Note title:</label>
+          <input type="text", ng-model="note.title">
+          <label>Note itself:</label>
+          <input type="text", ng-model="note.text">
+          <select ng-options="tag.name for tag in tags" ng-model="note.tag"></select>
+        </div> 
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" ng-click="addNote()">Apply</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>

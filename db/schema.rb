@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161112125203) do
+ActiveRecord::Schema.define(version: 20161213165746) do
 
   create_table "items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20161112125203) do
     t.integer  "tag_id"
     t.string   "path"
     t.integer  "user_id"
+    t.string   "type"
     t.index ["tag_id"], name: "index_tag_id", using: :btree
     t.index ["user_id"], name: "index_items_on_user_id", using: :btree
   end

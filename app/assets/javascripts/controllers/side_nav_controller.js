@@ -1,18 +1,37 @@
 /**
  * Created by vlad on 29.10.2016.
  */
-virtualDrawer.controller('SideNavController', function ($scope, $timeout, $mdSidenav, $log) {
-    // console.log(angular.element('#my-dropzone')[0]);
-    // var myDropzone = new Dropzone(angular.element(document.querySelector( '#my-dropzone' ))[0]);
-    //
-    // myDropzone.on("drop", function(file){
-    //     console.log("hi")
-    // })
+virtualDrawer.controller('SideNavController', function ($scope, $timeout, $mdSidenav, $log, $http) {
+    $http(
+        {
+            url:'/tags',
+            method:'GET',
+            params: {username: 'oneName'}
+        })
+        .then(function(result) {
+                $scope.navigateTags = result.data.map(function(elem) {
+                    return {
+                        name: elem.name,
+                        id: elem.id
+                    }
+                });
+            }
+    );
+    $scope.switchToTag = function(tagId) {
+        window.location = "/items/" + tagId;
+    }
 
-    Dropzone.options.myDropzone = {
-        init: function() {
-            this.on("drop", function(file) { alert("Added file."); });
-        },
-        autoProcessQueue: false
-    };
+    $scope.goHome = function() {
+        window.location = "/";
+    }
+
+    $scope.editButtons = function() {
+        $scope.$emit('editButtons');
+    }
+
+    $scope.toggleAddNoteModal = function() {
+        $scope.toggleModalAddNote();
+        $scope.$broadcast('addNote', $scope.navigateTags);
+    }
 });
+

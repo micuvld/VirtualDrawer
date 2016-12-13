@@ -1,4 +1,13 @@
 module FileUploader
+  def self.upload_item item_type, item, username, alternative_name
+    case item_type
+    when 'file'
+        self.upload_file item, username, alternative_name
+    when 'note'
+        self.upload_note item, username
+    end
+  end
+
   def self.upload_file file, username, alternative_name
     folder = "storage/#{username}"
     if alternative_name != ""
@@ -15,6 +24,25 @@ module FileUploader
 
       f = File.open filepath, "wb"
       f.write file.read()
+      f.close
+    #end
+
+    filepath
+  end
+
+  def self.upload_note note, username
+    note = JSON.parse note
+    puts note["title"]
+    folder = "storage/#{username}"
+    filepath = File.join(folder, note["title"])
+
+    #if !File.file?(filepath)
+    #  FileUtils::mkdir_p folder
+    #else
+      FileUtils::mkdir_p folder
+
+      f = File.open filepath, "wb"
+      f.write note["text"]
       f.close
     #end
 

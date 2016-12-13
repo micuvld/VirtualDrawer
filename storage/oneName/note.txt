@@ -1,0 +1,24 @@
+format->linetype->global screen factor
+
+
+Format/Dimension style
+Lines: 	
+	Baseline spacing = 10
+	Extend beyond dim lines = 2
+	Offset from origin = 0
+Symbols and arrows:
+	Arrow size = 3.5
+	Center marks = none
+Text:
+	Text height = 3.5/5/7
+	Alignnment = Aligned with dimension line
+	Offset from dim line = 2
+Fit:
+	Fit options: best fit
+	Text placement: Beside the dimension line
+	Scale and dim feats: Use overall scale of 1
+	Fine tuning: 2
+Primary units Linear/Angular:
+	Precision: 4 zecimale
+	Zero suppression: Trailing
+			
