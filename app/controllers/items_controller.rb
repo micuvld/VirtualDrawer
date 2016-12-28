@@ -40,6 +40,7 @@ class ItemsController < ApplicationController
   # PATCH/PUT /items/1.json
   def update
     item = Item.find(params[:item_id])
+
     item.name = params[:name]
     item.details = params[:details]
     item.save
@@ -49,15 +50,14 @@ class ItemsController < ApplicationController
   # DELETE /items/1.json
   def destroy
     item = Item.find(params[:item_id])
-    tag = Tags.find(item.tag_id)
 
-    delete_file_from_storage item.name, params[:username], tag.name
+    FileUploader.delete_file item.path
     Item.delete(params[:item_id])
   end
 
   def upload_item item, username, alternative_name, tag_name, item_type, details
     new_tag_created = false
-    filepath = FileUploader.upload_item(item_type, item, username, alternative_name)
+    filepath = FileUploader.upload_item(item_type, item, username, alternative_name, tag_name)
 
     # begin
     tag = Tag.where(name: tag_name)
@@ -105,5 +105,4 @@ class ItemsController < ApplicationController
 
   end
 
-  def delete_file_from_storage
 end

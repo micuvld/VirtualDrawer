@@ -1,16 +1,16 @@
 module FileUploader
-  def self.upload_item item_type, item, username, alternative_name
+  def self.upload_item item_type, item, username, alternative_name, tag_name
     case item_type
     when 'file'
-        self.upload_file item, username, alternative_name
+        self.upload_file item, username, alternative_name, tag_name
     when 'note'
         #self.upload_note item, username
         puts 'it`s a note. no need to upload'
     end
   end
 
-  def self.upload_file file, username, alternative_name
-    folder = "storage/#{username}"
+  def self.upload_file file, username, alternative_name, tag_name
+    folder = "storage/#{username}/#{tag_name}"
     if alternative_name != ""
       filename = alternative_name
     else
@@ -50,8 +50,8 @@ module FileUploader
     filepath
   end
 
-  def self.delete_file file_name, username, tag_name
-    
+  def self.delete_file path
+    FileUtils::rm path
   end
 
   def new

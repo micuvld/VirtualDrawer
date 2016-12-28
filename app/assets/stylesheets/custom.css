@@ -47,6 +47,8 @@
 
 .item-details{
     font-style:italic;
+    height:100%;
+    width:100%;
 }
 
 .delete-button {

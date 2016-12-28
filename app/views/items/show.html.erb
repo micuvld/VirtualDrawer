@@ -34,7 +34,7 @@
           <span ng-if="item.item_type == 'note'">
             <span class="item-title">{{item.name}}</span>
             <br>
-            <span class="item-details">{{item.details}}</span>
+            <pre class="item-details">{{item.details}}</pre>
           </span>
           <button class="delete-button" ng-show="editButtonIsVisible(item.id)" 
             ng-click="toggleEditItem(item)">Edit</button>
