@@ -8,6 +8,15 @@ virtualDrawer.controller('NotesController', ['$scope', '$http', function($scope,
 		$scope.tags = data;
 	})
 
+    $scope.$on('editNote', function(event, data) {
+        console.log(data);
+        $scope.note = {
+            id: data.id,
+            name: data.name,
+            details: data.details
+        }
+    })
+
 	$scope.addNote = function() {
 		console.log($scope.note);
 		$http(
@@ -16,7 +25,9 @@ virtualDrawer.controller('NotesController', ['$scope', '$http', function($scope,
             method:'POST',
             params: {
             	username: 'oneName',
-            	note: $scope.note,
+            	note: $scope.note.name,
+                details: $scope.note.details,
+                tag_name: $scope.note.tag.name,
             	item_type: 'note'
         	},
         	headers: {
@@ -29,4 +40,28 @@ virtualDrawer.controller('NotesController', ['$scope', '$http', function($scope,
             }
         );
 	}
+
+    $scope.editNote = function() {
+        console.log($scope.note);
+        $http(
+        {
+            url:'/items',
+            method:'PUT',
+            params: {
+                username: 'oneName',
+                item_id: $scope.note.id,
+                name: $scope.note.name,
+                details: $scope.note.details,
+                item_type: 'note'
+            },
+            headers: {
+                "Content-Type": "application/json",
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            }
+        })
+        .then(function(result) {
+                console.log(result);
+            }
+        );
+    }
 }]);

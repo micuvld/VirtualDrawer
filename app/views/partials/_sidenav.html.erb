@@ -36,9 +36,13 @@
         </div>
         <div class="modal-body">
           <label>Note title:</label>
-          <input type="text", ng-model="note.title">
+          <input type="text", ng-model="note.name">
+          <br>
           <label>Note itself:</label>
-          <input type="text", ng-model="note.text">
+          <br>
+          <textarea rows="5" cols="50" ng-model="note.details"></textarea>
+          <br>
+          <label>Tag:</label>
           <select ng-options="tag.name for tag in tags" ng-model="note.tag"></select>
         </div> 
         <div class="modal-footer">

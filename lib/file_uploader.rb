@@ -4,7 +4,8 @@ module FileUploader
     when 'file'
         self.upload_file item, username, alternative_name
     when 'note'
-        self.upload_note item, username
+        #self.upload_note item, username
+        puts 'it`s a note. no need to upload'
     end
   end
 
@@ -47,6 +48,10 @@ module FileUploader
     #end
 
     filepath
+  end
+
+  def self.delete_file file_name, username, tag_name
+    
   end
 
   def new

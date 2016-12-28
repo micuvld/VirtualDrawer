@@ -14,7 +14,7 @@ class TagsController < ApplicationController
 
   def update
   	tag = Tag.find_by(id: params[:tagId])
-	tag.name = params[:tagNewName]
-	tag.save
+	  tag.name = params[:tagNewName]
+	  tag.save
   end
 end

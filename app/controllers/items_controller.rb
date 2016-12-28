@@ -33,64 +33,77 @@ class ItemsController < ApplicationController
   # POST /items.json
   # params: file, username, tag_name, alternative_name, description
   def create
-      upload_item params[params[:item_type]], params[:username], params[:alternative_name], params[:tag_name], params[:item_type]
+    upload_item params[params[:item_type]], params[:username], params[:alternative_name], params[:tag_name], params[:item_type], params[:details]
   end
 
   # PATCH/PUT /items/1
   # PATCH/PUT /items/1.json
   def update
-    respond_to do |format|
-      if @item.update(item_params)
-        format.html { redirect_to @item, notice: 'Item was successfully updated.' }
-        format.json { render :show, status: :ok, location: @item }
-      else
-        format.html { render :edit }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
-    end
+    item = Item.find(params[:item_id])
+    item.name = params[:name]
+    item.details = params[:details]
+    item.save
   end
 
   # DELETE /items/1
   # DELETE /items/1.json
   def destroy
+    item = Item.find(params[:item_id])
+    tag = Tags.find(item.tag_id)
+
+    delete_file_from_storage item.name, params[:username], tag.name
+    Item.delete(params[:item_id])
   end
 
-  def upload_item item, username, alternative_name, tag_name, item_type
+  def upload_item item, username, alternative_name, tag_name, item_type, details
     new_tag_created = false
     filepath = FileUploader.upload_item(item_type, item, username, alternative_name)
 
-    begin
-    new_tag_created = attempt_create_tag params[:tag_name]
+    # begin
+    tag = Tag.where(name: tag_name)
+    if tag.empty?
+      tag = Tag.create(name: tag_name)
+      new_tag_created = true
+    else
+      tag = tag[0]
+      new_tag_created = false
+    end
 
-    user = User.where(username: params[:username])[0]
+    user = User.where(username: username)[0]
 
     if UserToTag.where(user_id: user.id, tag_id: tag.id).empty?
       user_to_tag = UserToTag.create(tag_id: tag[:id], user_id: user[:id])
     end
 
-    item = Item.create(name: params[:file].original_filename,
-                user_id: user[:id],
-                tag_id: tag[:id],
-                path: filepath,
-                type: params[:item_type])
-
-    rescue
-      if new_tag_created == true
-        Tag.delete(tag[:id])
-      end
-    end
+    create_generic_item item, user[:id], details, tag[:id], filepath, item_type
+    puts 'after item'
+    # rescue => error
+    #   puts error.backtrace
+    #   if new_tag_created == true
+    #     Tag.delete(tag[:id])
+    #   end
+    # end
 
     redirect_to :back
   end
 
-  def attempt_create_tag tag_name
-    tag = Tag.where(tag_name)
-    if tag.empty?
-      tag = Tag.create(tag_name)
-      true
-    else
-      tag = tag[0]
-      false
+  def create_generic_item item, user_id, details, tag_id, path, type
+    case type
+    when 'note'
+      name = item
+    when 'file'
+      details = ""
+      name = item.original_filename
     end
+    puts name, user_id, tag_id, path, type
+    Item.create(:name => name,
+        :details => details,
+        :user_id => user_id,
+        :tag_id => tag_id,
+        :path => path,
+        :item_type => type)
+
   end
+
+  def delete_file_from_storage
 end

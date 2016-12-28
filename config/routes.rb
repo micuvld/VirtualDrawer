@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'items', to: 'items#index'
   get 'items/:tag', to: 'items#show'
+  put 'items', to:'items#update'
+  delete 'items', to: 'items#destroy'
 
   get 'download/:id', to: 'download#download'
 
