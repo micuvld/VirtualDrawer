@@ -13,35 +13,25 @@
 
 <div class="row" style="overflow:auto; height:100%" ng-controller="MainController">
   <div class="col-sm-3" style="height:100%"><%= render 'partials/sidenav'%></div>
-  <div ng-controller="ItemsController"  style="background-color:#F5FFD3" ng-cloak>
-    <md-content layout-padding style="background-color:#F5FFD3">
-      <md-grid-list
-      md-cols-gt-md="12" md-cols="3" md-cols-md="8"
-      md-row-height-gt-md="1:1" md-row-height="4:3"
-      md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px">
-        <md-grid-tile
-        ng-repeat="item in items track by $index"
-        md-colspan-gt-sm="3"
-        md-rowspan-gt-sm="3"
-        md-whiteframe="3"
+  <div ng-controller="ItemsController" class="col-lg-9 big-container" ng-cloak>
+    <div ng-repeat="item in items track by $index"
         ng-mouseenter="showButtonsForItem(item.id)"
         ng-mouseleave="showButtonsForItem(-1)"
-        ng-click="itemAction(item)">
+        class="col-lg-2 item-container">
 
-          <span ng-if="item.item_type == 'file'">
-            {{item.name}}
-          </span>
-          <span ng-if="item.item_type == 'note'">
-            <span class="item-title">{{item.name}}</span>
-            <br>
-            <pre class="item-details">{{item.details}}</pre>
-          </span>
-          <button class="delete-button" ng-show="editButtonIsVisible(item.id)" 
-            ng-click="toggleEditItem(item)">Edit</button>
-
-        </md-grid-tile>
-      </md-grid-list>
-    </md-content>
+        <div ng-click="itemAction(item)" class="item" style="background-color:blue">
+            <p ng-if="item.item_type == 'file'">
+              {{item.name}}
+            </p>
+            
+            <div ng-if="item.item_type == 'note'">
+              <div class="item-title">{{item.name}}</div>
+              <pre class="item-details">{{item.details}}</pre>
+            </div>
+        </div>
+        <button class="delete-button" ng-show="editButtonIsVisible(item.id)" 
+          ng-click="toggleEditItem(item)">Edit</button>
+    </div>
 
     <div id="edit_file_modal" edit-file-modal class="modal fade" role="dialog" >
       <div class="modal-dialog">

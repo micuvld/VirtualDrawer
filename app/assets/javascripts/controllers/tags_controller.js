@@ -12,9 +12,10 @@ virtualDrawer.controller('TagController', ['$scope', '$http', '$timeout', functi
     $scope.newTagName = "";
     $scope.tagNameInput = "";
 
+    $scope.hoveredTagId = -1;
+
     $scope.currentEditingTag = "";
     $scope.oldNameOfCurrentEditingTag = "";
-    var editableTags = false;
 
     function Tag(id, name) {
         this.id = id;
@@ -64,14 +65,6 @@ virtualDrawer.controller('TagController', ['$scope', '$http', '$timeout', functi
 
     getAllTags();
 
-    $scope.$on('editButtonsForTagController', function() {
-        editableTags = !editableTags;
-    });
-
-    $scope.getEditableStatus = function() {
-        return editableTags ? "editable-tag-container" : "tag-container";
-    }
-
     function getAllTags() {
             $http(
         {
@@ -90,13 +83,7 @@ virtualDrawer.controller('TagController', ['$scope', '$http', '$timeout', functi
     }
 
     $scope.tagAction = function(tag) {
-        if (editableTags == true) {
-            $scope.currentEditingTag = tag;
-            $scope.oldNameOfCurrentEditingTag = tag.name;
-            $scope.toggleModalEdit();
-        } else {
-            window.location = "/items/" + tag.id;
-        }
+        window.location = "/items/" + tag.id;
     }
 
     function createDropzones() {
@@ -200,5 +187,19 @@ virtualDrawer.controller('TagController', ['$scope', '$http', '$timeout', functi
     	$scope.newTagDropzone.processQueue();
         $scope.toggleModal();
         window.location.reload();
+    }
+
+    $scope.showButtonsForTag = function(tagId) {
+        $scope.hoveredTagId = tagId;
+    }
+
+    $scope.editButtonIsVisible = function(tagId) {
+        return tagId == $scope.hoveredTagId
+    }
+
+    $scope.toggleEditTag = function(tag) {
+        $scope.currentEditingTag = tag;
+        $scope.oldNameOfCurrentEditingTag = tag.name;
+        $scope.toggleModalEdit();
     }
 }]);

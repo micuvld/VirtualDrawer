@@ -25,10 +25,6 @@ virtualDrawer.controller('SideNavController', function ($scope, $timeout, $mdSid
         window.location = "/";
     }
 
-    $scope.editButtons = function() {
-        $scope.$emit('editButtons');
-    }
-
     $scope.toggleAddNoteModal = function() {
         $scope.toggleModalAddNote();
         $scope.$broadcast('addNote', $scope.navigateTags);

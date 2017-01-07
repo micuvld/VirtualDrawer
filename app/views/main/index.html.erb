@@ -18,18 +18,22 @@
       <div style="height:100%"><%= render 'partials/sidenav'%></div>
     </div>
 
-    <div class="col-lg-9" ng-controller="TagController"
-         style="background-color:#F5FFD3; margin-top:20px;" ng-cloak>
+    <div class="col-lg-9 big-container" ng-controller="TagController" ng-cloak>
           <!--<label>Search:-->
             <!--<input ng-model="searchTag">-->
           <!--</label>-->
           <div ng-repeat="tag in tags"
-                class="col-lg-2" ng-click="tagAction(tag)"
-                ng-style="{
-                  'background': colors[$index]
-                }"
-                ng-class="getEditableStatus()"
-                id="tag_{{tag.id}}">
+                class="col-lg-2 tag-container"
+                ng-mouseenter="showButtonsForTag(tag.id)"
+                ng-mouseleave="showButtonsForTag(-1)">
+            <div ng-click="tagAction(tag)"
+                  ng-style="{
+                    'background': colors[$index]
+                  }"
+                  id="tag_{{tag.id}}">
+            </div>
+            <button class="delete-button" ng-show="editButtonIsVisible(tag.id)" 
+                ng-click="toggleEditTag(tag)">Edit</button>
           </div>
 
       <!-- Trigger the modal with a button -->

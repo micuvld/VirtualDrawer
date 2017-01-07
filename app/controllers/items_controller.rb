@@ -51,7 +51,9 @@ class ItemsController < ApplicationController
   def destroy
     item = Item.find(params[:item_id])
 
-    FileUploader.delete_file item.path
+    if (item.item_type == 'file')
+      FileUploader.delete_file item.path
+    end
     Item.delete(params[:item_id])
   end
 

@@ -31,7 +31,7 @@
     text-align: center;
  }
 
- .editable-tag-container {
+.editable-tag-container {
     margin-bottom: 20px;
     margin-right: 20px;
     height: 60px;
@@ -39,23 +39,60 @@
     border-style: dashed; 
     border-color: white;
     opacity: 0.7;
- }
+}
+
+.item {
+    height: 150px;
+    width:150px;
+    padding-left:5px;
+    padding-right:5px;
+    text-align: center;
+    color: white;
+    display: table; 
+}
+
+.item p {
+  font-weight:bold;
+  display: table-cell; 
+  vertical-align: middle; 
+  text-align: center;
+}
+
+.item-container {
+    margin-bottom: 20px;
+    margin-right: 20px;
+    height: 150px;
+    width: 150px;
+    text-align: center;
+}
 
 .item-title {
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-weight:bold;
 }
 
 .item-details{
     font-style:italic;
-    height:100%;
-    width:100%;
+    width: 150px;
+    height: 120px;
+    white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .delete-button {
     position: absolute;
-    bottom: 10px;
+    bottom: -25px;
     right: 10px;
     z-index: 10;
+}
+
+.big-container {
+    background-color:#F5FFD3;
+    margin-top:20px
 }
 
 .md-button.md-fab {
