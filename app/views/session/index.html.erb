@@ -1,0 +1,47 @@
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- Angular Material requires Angular.js Libraries -->
+
+</head>
+
+<body ng-app="VirtualDrawer" style="background-color:#F5FFD3" ng-cloak>
+<div ng-cloak>
+  	<md-navbar
+	  class="md-nav-bar"
+	  md-component-id="left"
+	  md-is-locked-open="$mdMedia('gt-md')"
+	  md-whiteframe="4">
+		<md-toolbar class="md-theme-indigo" ng-click="goHome()">
+		  <h1 class="md-toolbar-tools">
+		  Virtual Drawer
+		  </h1>
+		</md-toolbar>
+	</md-navbar>
+</div>
+
+<div class="container-fluid" style="text-align:center" ng-controller="SessionController">
+	<h3>Register/Login</h3>
+	<div class="row">
+		<div class="col-lg-4"></div>
+		<div class="form-group col-lg-4">
+		  <label for="usr">Username:</label>
+		  <input type="text" class="form-control" id="usr" ng-model="username">
+		</div>
+		<div class="col-lg-4"></div>
+	</div>
+	<div class="row">
+		<div class="col-lg-4"></div>
+		<div class="form-group col-lg-4">
+		  <label for="pwd">Password:</label>
+		  <input type="password" class="form-control" id="pwd" ng-model="password">
+		</div>
+		<div class="col-lg-4"></div>
+	</div>
+	<button class="btn btn-default" ng-click="registerOrLogin()">Submit</button>
+</div>
+</body>
+</html>

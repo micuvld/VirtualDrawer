@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  before_filter :authenticate
   include FileUploader
   # GET /items
   # GET /items.json
@@ -33,7 +34,7 @@ class ItemsController < ApplicationController
   # POST /items.json
   # params: file, username, tag_name, alternative_name, description
   def create
-    upload_item params[params[:item_type]], params[:username], params[:alternative_name], params[:tag_name], params[:item_type], params[:details]
+    upload_item params[params[:item_type]], session['username'], params[:alternative_name], params[:tag_name], params[:item_type], params[:details]
   end
 
   # PATCH/PUT /items/1
@@ -50,11 +51,13 @@ class ItemsController < ApplicationController
   # DELETE /items/1.json
   def destroy
     item = Item.find(params[:item_id])
-
-    if (item.item_type == 'file')
-      FileUploader.delete_file item.path
+    user = User.find(item[:user_id])
+    if(user && user[:username] == session['username'])
+      if (item.item_type == 'file')
+        FileUploader.delete_file item.path
+      end
+      Item.delete(params[:item_id])
     end
-    Item.delete(params[:item_id])
   end
 
   def upload_item item, username, alternative_name, tag_name, item_type, details

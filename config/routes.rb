@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'session/index'
+
+  get 'session/new'
+
+  post 'session/login'
+
+  get 'session/logout'
+
   get 'items', to: 'items#index'
   get 'items/:tag', to: 'items#show'
   put 'items', to:'items#update'

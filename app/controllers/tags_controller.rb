@@ -1,11 +1,8 @@
 class TagsController < ApplicationController
+  before_filter :authenticate
   def get_tags
-    if params[:username] != nil
-      user = (User.where(username: params[:username]))[0]
-      render json: Tag.joins(:userToTags).where('user_id = ?', user[:id])
-    else
-      render json: Tag.all
-    end
+    user = (User.where(username: session['username']))[0]
+    render json: Tag.joins(:userToTags).where('user_id = ?', user[:id])
   end
 
   def destroy

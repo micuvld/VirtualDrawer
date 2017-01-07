@@ -29,5 +29,11 @@ virtualDrawer.controller('SideNavController', function ($scope, $timeout, $mdSid
         $scope.toggleModalAddNote();
         $scope.$broadcast('addNote', $scope.navigateTags);
     }
+
+    $scope.logout = function() {
+        $http.get('session/logout').then(function(response) {
+            window.location.href = "session/index";
+        });
+    }
 });
 

@@ -1,4 +1,5 @@
 class FileManagerController < ApplicationController
+  before_filter :authenticate
   # def index
   #   @tags = Tag.all
   # end

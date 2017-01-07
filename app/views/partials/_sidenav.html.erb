@@ -11,6 +11,7 @@
       </h1>
     </md-toolbar>
         <button class="side-button" ng-click="toggleAddNoteModal()">Add note</button>
+        <button class="side-button" ng-click="logout()">Log out</button>
         <label>Search:
           <input ng-model="searchTag">
         </label>
@@ -20,7 +21,6 @@
                style="background-color: #4527a0; margin-top:5px">{{tag.name}}
           </div>
         </div>
-    </md-content>
 
   </md-sidenav>
 
