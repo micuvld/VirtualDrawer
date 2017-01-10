@@ -3,22 +3,27 @@
   class="md-sidenav-left"
   md-component-id="left"
   md-is-locked-open="$mdMedia('gt-md')"
-  md-whiteframe="4">
+  md-whiteframe="4"
+  style="background-color:#097054; height:600px" >
 
     <md-toolbar class="md-theme-indigo" ng-click="goHome()">
       <h1 class="md-toolbar-tools">
       Virtual Drawer
       </h1>
-    </md-toolbar>
+    </md-toolbar style="background-color:#097054;">
         <button class="side-button" ng-click="toggleAddNoteModal()">Add note</button>
         <button class="side-button" ng-click="logout()">Log out</button>
-        <label>Search:
-          <input ng-model="searchTag">
-        </label>
-        <div id="navigateTags" style="overflow-y: scroll; height:500px">
-          <div ng-repeat="tag in navigateTags | filter:{name: searchTag}"
-                class="tag" ng-click="switchToTag(tag.id)"
-               style="background-color: #4527a0; margin-top:5px">{{tag.name}}
+        <div ng-if="isItemPage()">
+          <div style="margin-top:10px;background-color:#097054" >
+            <label style="color:white">Search tag:
+              <input ng-model="searchTag">
+            </label>
+          </div>
+          <div id="navigateTags" style="overflow-y: scroll; height:500px background-color:#097054;" >
+            <div ng-repeat="tag in navigateTags | filter:{name: searchTag}"
+                  class="tag" ng-click="switchToTag(tag.id)"
+                 style="margin-top:5px">{{tag.name}}
+            </div>
           </div>
         </div>
 
@@ -41,7 +46,7 @@
           <br>
           <textarea rows="5" cols="50" ng-model="note.details"></textarea>
           <br>
-          <label>Tag:</label>
+          <label style="margin-top:5px">Tag:</label>
           <select ng-options="tag.name for tag in tags" ng-model="note.tag"></select>
         </div> 
         <div class="modal-footer">

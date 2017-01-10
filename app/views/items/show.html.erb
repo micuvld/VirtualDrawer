@@ -7,7 +7,7 @@
   <!-- Angular Material requires Angular.js Libraries -->
 
 </head>
-<body ng-app="VirtualDrawer" style="background-color:#F5FFD3" ng-cloak>
+<body ng-app="VirtualDrawer" style="background-color:#FF9900" ng-cloak>
 
 <!--<section layout="row">-->
 
@@ -19,7 +19,7 @@
         ng-mouseleave="showButtonsForItem(-1)"
         class="col-lg-2 item-container">
 
-        <div ng-click="itemAction(item)" class="item" style="background-color:blue">
+        <div ng-click="itemAction(item)" class="item">
             <p ng-if="item.item_type == 'file'">
               {{item.name}}
             </p>
@@ -29,7 +29,7 @@
               <pre class="item-details">{{item.details}}</pre>
             </div>
         </div>
-        <button class="delete-button" ng-show="editButtonIsVisible(item.id)" 
+        <button class="delete-button btn btn-default glyphicon glyphicon-edit" ng-show="editButtonIsVisible(item.id)" 
           ng-click="toggleEditItem(item)">Edit</button>
     </div>
 

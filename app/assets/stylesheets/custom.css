@@ -4,8 +4,13 @@
     padding-top: 5px;
     text-align: left;
     color: white;
-    background-color: #336699;
+    background-color: #FFDE00;
     font-size: 20px;
+    border:none;
+}
+
+.side-button:hover, .tag:hover, .item:hover {
+    border: 3px solid;
 }
 
 .tag {
@@ -14,6 +19,7 @@
     padding-bottom: 20px;
     text-align: center;
     color: white;
+    background-color:#6599FF;
 }
 
 .new-tag {
@@ -21,7 +27,8 @@
     padding-top: 20px;
     padding-bottom: 20px;
     text-align: center;
-    color: blue;
+    border-color: #6599FF;
+    color: white;
 }
 
 .tag-container {
@@ -49,6 +56,7 @@
     text-align: center;
     color: white;
     display: table; 
+    background-color: #6599FF;
 }
 
 .item p {
@@ -91,7 +99,7 @@
 }
 
 .big-container {
-    background-color:#F5FFD3;
+    background-color:#FF9900;
     margin-top:20px
 }
 
@@ -104,7 +112,7 @@
 }
 
 .md-theme-indigo {
-    background-color: #71C42B !important;
+    background-color: #097054 !important;
 }
 .dialogdemoBasicUsage #popupContainer {
     position: relative; }

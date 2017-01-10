@@ -5,4 +5,12 @@ virtualDrawer.controller('MainController', ['$scope', '$http', function($scope,$
 	$scope.$on('editButtons', function() {
 		$scope.$broadcast('editButtonsForTagController');
 	})
+
+	$scope.isItemPage = function() {
+		if (window.location.href.indexOf("items") == -1) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }]);

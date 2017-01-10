@@ -7,7 +7,7 @@
   <!-- Angular Material requires Angular.js Libraries -->
   <%= csrf_meta_tag %>
 </head>
-<body ng-app="VirtualDrawer" style="background-color:#F5FFD3" ng-cloak>
+<body ng-app="VirtualDrawer" style="background-color:#FF9900" ng-cloak>
 
 <!--<section layout="row">-->
 
@@ -27,12 +27,9 @@
                 ng-mouseenter="showButtonsForTag(tag.id)"
                 ng-mouseleave="showButtonsForTag(-1)">
             <div ng-click="tagAction(tag)"
-                  ng-style="{
-                    'background': colors[$index]
-                  }"
                   id="tag_{{tag.id}}">
             </div>
-            <button class="delete-button" ng-show="editButtonIsVisible(tag.id)" 
+            <button class="delete-button btn btn-default glyphicon glyphicon-edit" ng-show="editButtonIsVisible(tag.id)" 
                 ng-click="toggleEditTag(tag)">Edit</button>
           </div>
 
