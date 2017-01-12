@@ -74,6 +74,7 @@ virtualDrawer.controller('ItemsController', ['$scope', '$http', function($scope,
         })
         .then(function(result) {
                 console.log(result);
+                getItemsForTag();
             }
         );
     }
@@ -85,4 +86,6 @@ virtualDrawer.controller('ItemsController', ['$scope', '$http', function($scope,
     $scope.editButtonIsVisible = function(itemId) {
         return itemId == $scope.hoveredItemId
     }
+
+    $scope.$on('refreshItems', getItemsForTag);
 }]);

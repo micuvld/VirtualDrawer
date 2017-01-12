@@ -36,7 +36,7 @@ virtualDrawer.controller('NotesController', ['$scope', '$http', function($scope,
         	}
         })
         .then(function(result) {
-                console.log(result);
+                location.reload();
             }
         );
 	}
@@ -60,7 +60,7 @@ virtualDrawer.controller('NotesController', ['$scope', '$http', function($scope,
             }
         })
         .then(function(result) {
-                console.log(result);
+                $scope.$emit('refreshItems');
             }
         );
     }
